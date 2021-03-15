@@ -1,37 +1,69 @@
-software_virtualbox
+# software_virtualbox
 =========
 
-This role will install software_virtualbox software
+This role will install virtualbox software
 
-Requirements
+## Requirements
 ------------
 
-All dependencies will appear on requirements.yml file
+All requirements will appear on requirements-software.yml file
 
-Role Variables
+## Role Variables
 --------------
 
 Not defined yet. But in the future we could stage software version in here
 
-Dependencies
+## Dependencies
 ------------
 
-All dependencies will appear on requirements.yml file
+All dependencies will appear on requirements-software.yml file
 
-Example Playbook
+## Example requirements
+--------------------
+
+    requirements-software.yml
+
+    ---
+    - src: git@github.com:xussof/software_virtualbox
+      scm: git
+      version: master
+      name: software_virtualbox
+
+## Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+    test-software.yml
 
-    - hosts: servers
-      roles:
-         - { role: xussof.software_virtualbox }
+    ---
+    - hosts: localhost
+      pre_tasks:
+        - raw: ansible-galaxy install -f -r requirements-software.yml
+      vars_files:
+        - "encrypted.yml"
+      tasks:
+        - name: Including role to test
+          include_role:
+            name: software_virtualbox
 
-License
+## Example encrypted
+-----------------
+
+    encrypted.yml
+
+    ---
+    example_sudo_pass: yourpass
+
+## Example calling playbook
+------------------------
+
+    ansible-playbook test-software.yml --extra-vars "ansible_become_pass=example_sudo_pass"
+
+
+## License
 -------
 
 BSD
 
-Author Information
+## Author Information
 ------------------
 Made by @xussof
